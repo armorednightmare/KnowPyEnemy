@@ -27,4 +27,4 @@ In the case you forgot to run the service and still want to know the details for
 - run KnowPyEnemy.py 
 
 ## Example
-![image](https://github.com/user-attachments/assets/2214b665-86b6-4140-95ef-33b0f4580187)
+![example.png](example.png)
