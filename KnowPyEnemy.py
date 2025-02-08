@@ -32,8 +32,11 @@ class KpyEconfig():
     def generate_config(self, arcdps_location):
         self.ARCDPS_LOG_LOCATION = arcdps_location
         self.consistancy_checks()
+
+    def write_config(self):
         with open('KnowPyEnemy.conf', 'w') as f:
             f.writelines([key + '=' + str(val) + '\n' for key, val in self.__dict__.items()])
+        self.consistancy_checks()
 
     def read_config(self):
         with open('KnowPyEnemy.conf', 'r') as f:
@@ -43,6 +46,15 @@ class KpyEconfig():
                 conf[1] = conf[1].lower() in ("true", True) if conf[1].lower() in ("true", "false") else conf[1]
                 setattr(self,conf[0],conf[1])
         self.consistancy_checks()
+        return self
+
+    def show_config(self, print_conf=False):
+        output = []
+        [output.append('  ' + key + '=' + str(val)) for key, val in self.__dict__.items()]
+        if print_conf:
+            print("Current config:")
+            [print(line) for line in output]
+        return output
 
 def find_zevtc_files(folder: str, simple_text_filter: str):
     files_path = os.path.join(folder, '**/*.zevtc')
@@ -203,6 +215,8 @@ if __name__ == "__main__":
 
     KpyEconf = KpyEconfig()
     KpyEconf.read_config()
+
+
 
     # the script will process all found files, beginning from the latest date modified, limit the number here
     latest_x_files = 20

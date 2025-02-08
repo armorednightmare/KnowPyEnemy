@@ -66,6 +66,7 @@ if __name__ == "__main__":
     # setup own config file and ask user for the ARCDPS log location
     setupKpyE = KpyEconfig()
     setupKpyE.generate_config(set_arcdps_log_directory())
+    setupKpyE.write_config()
     setupKpyE.read_config()
 
     # printout current setup

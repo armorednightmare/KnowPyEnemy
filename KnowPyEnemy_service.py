@@ -1,5 +1,6 @@
-import KnowPyEnemy as KpyE
+from KnowPyEnemy import KpyEconfig, process_zevtc_files
 import colorama
+import time
 from colorama import Fore, init
 
 from watchdog.observers import Observer
@@ -10,11 +11,17 @@ dbg = False
 
 def process_file(file):
 
-    if 'zevtc' in file:
-        zevtc_files = KpyE.find_zevtc_files(folder,'WvW')[0]
-
+    if all(wrd in file for wrd in ['zevtc', 'WvW']):
         print(" processing started ")
-        KpyE.process_zevtc_files([zevtc_files])
+
+        for count in range(10):
+            try:
+                process_zevtc_files(KpyEconf, [file])
+                break
+            except OSError:
+                print("waiting for file to be accessible...")
+                time.sleep(1)
+                continue
 
 class MyHandler(FileSystemEventHandler):
     def on_any_event(self, event):
@@ -33,17 +40,15 @@ class MyHandler(FileSystemEventHandler):
         if event.dest_path.endswith('zevtc'):
             process_file(event.dest_path.strip())
 
-event_handler = MyHandler()
-observer = Observer()
-folder = r"D:\Documents\Guild Wars 2\addons\arcdps\arcdps.cbtlogs"
-observer.schedule(event_handler, path=folder, recursive=True)
-observer.start()
+if __name__ == "__main__":
 
-input("press ENTER to end observer service\n")
-observer.stop()
-input('Press ENTER to exit')
+    KpyEconf = KpyEconfig()
+    KpyEconf.read_config()
 
-
-
-
-
+    event_handler = MyHandler()
+    observer = Observer()
+    observer.schedule(event_handler, path=KpyEconf.ARCDPS_LOG_LOCATION, recursive=True)
+    observer.start()
+    input("press ENTER to end observer service\n")
+    observer.stop()
+    input('Press ENTER to exit')
