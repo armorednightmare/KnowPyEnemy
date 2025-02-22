@@ -6,6 +6,7 @@ KnowPyEnemy - Python based extension processing ArcDps logs to show information 
 - Windows 10/11
 - Install [Python 3.12](https://www.python.org/downloads/) or compatible version
 - Install required packages mentioned in requirement.txt, e.g. with `pip install -r requirements.txt`
+  - a virtual environment is recommended, e.g. check guide [here](https://www.freecodecamp.org/news/how-to-setup-virtual-environments-in-python/)
 
 ## Usage
 
@@ -28,3 +29,5 @@ In the case you forgot to run the service and still want to know the details for
 
 ## Example
 ![example.png](example.png)
+
+Copyright - All rights reserved @armorednightmare
