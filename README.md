@@ -11,7 +11,7 @@ KnowPyEnemy - Python based extension processing ArcDps logs to show information 
 ## Usage
 
 ### Setup
-- [Download repository](https://github.com/dduerner/KnowPyEnemy/archive/refs/heads/main.zip)
+- [Download repository](https://github.com/armorednightmare/KnowPyEnemy/archive/refs/heads/main.zip)
 - run Setup.py
   - set the path to your ARCDPS logs when asked
     - usually this is `%USERPROFILE%\Documents\Guild Wars 2\addons\arcdps\arcdps.cbtlogs`

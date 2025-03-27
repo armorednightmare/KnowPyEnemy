@@ -4,7 +4,7 @@ import subprocess
 import json
 import colorama
 import math
-from colorama import Fore, init
+from colorama import Fore, Style, init
 from tabulate import tabulate
 from collections import Counter, OrderedDict
 
@@ -80,6 +80,15 @@ def convert_zevtc_to_json(gw2eicli_loc, zevtc_file: str):
 
     return json_file[0]
 
+def team_id2color(team_id):
+    if team_id == 706:
+        return ["Red", Fore.RED]
+    if team_id == 2763:
+        return ["Green", Fore.GREEN]
+    if team_id == 432:
+        return ["Blue", Fore.BLUE]
+    return [str(team_id), Fore.RESET]
+
 def extract_player_count(json_file: str):
     randoms = 0
 
@@ -119,15 +128,18 @@ def extract_player_count(json_file: str):
             lines[team].append(line_tmp)
 
         lines[team] = (tabulate(lines[team], headers = header, numalign="left"))
-        class_str += '\nClasses Team ' + str(team) + ' (' + str(len(enemies[team])) + '): \n' + str(lines[team]) + "\n"
+        class_str +=  team_id2color(team)[1] + '\nTeam ' + team_id2color(team)[0] + ' (' + str(len(enemies[team])) + '): \n' + Style.RESET_ALL + str(lines[team]) + "\n" + Fore.RESET
 
-    team_cnt = [len(enemies[team]) for team in enemies]
+    team_cnt = tuple([len(enemies[team]) for team in enemies])
+    teams_str = ' ' + str(team_cnt).replace(',', " +") if len(team_cnt)>1 else ''
 
     result = str(
-        Fore.RED + str(sum(team_cnt)) + ' Enemies' + (' ' + str(team_cnt) if len(team_cnt)>1 else '') +
-        Fore.RESET + ' vs ' +
-        Fore.GREEN + str(len(allies)) + ' Allies' +
-        Fore.RESET + ' ( ' + str(len(squad)) + ' in Squad + ' + str(len(randoms)) + ' randoms )')
+        Style.BRIGHT +
+        Fore.LIGHTRED_EX + str(sum(team_cnt)) + ' Enemies' + Fore.RESET + teams_str +
+        Fore.RESET + ' vs. ' +
+        Fore.LIGHTGREEN_EX + str(len(allies)) + ' Allies' +
+        Fore.RESET +' (' + str(len(squad)) + ' in Squad + ' + str(len(randoms)) + ' Randoms)' +
+        Style.RESET_ALL)
 
     return [result, class_str]
 
