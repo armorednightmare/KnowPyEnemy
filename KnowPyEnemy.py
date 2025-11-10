@@ -81,11 +81,11 @@ def convert_zevtc_to_json(gw2eicli_loc, zevtc_file: str):
     return json_file[0]
 
 def team_id2color(team_id):
-    if team_id == 706:
+    if team_id == 707:
         return ["Red", Fore.RED]
-    if team_id == 2763:
+    if team_id == 2767:
         return ["Green", Fore.GREEN]
-    if team_id == 432:
+    if team_id == 433:
         return ["Blue", Fore.BLUE]
     return [str(team_id), Fore.RESET]
 
